@@ -7,7 +7,6 @@ public class Product {
     private double price;
     private String location;
     private double weight;
-    private int quantity;
 
     /**
      * Product object constructor
@@ -15,14 +14,13 @@ public class Product {
      * @param price
      * @param location
      * @param weight
-     * @param quantity
      */
-    public Product(String name, double price, String location, double weight, int quantity) {
+    public Product(String name, double price, String location, double weight) {
         this.name = name;
         this.price = price;
         this.location = location;
         this.weight = weight;
-        this.quantity = quantity;
+
     }
 
     public Product(){}
@@ -51,13 +49,7 @@ public class Product {
     }
 
 
-    public int getQuantity() {
-        return quantity;
-    }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     /**
      * Overiding equal and hashcode methods to
@@ -70,12 +62,12 @@ public class Product {
         if (this == o) return true;
         if (!(o instanceof Product)) return false;
         Product product = (Product) o;
-        return Double.compare(product.getPrice(), getPrice()) == 0 && Double.compare(product.getWeight(), getWeight()) == 0 && getQuantity() == product.getQuantity() && Objects.equals(getName(), product.getName()) && Objects.equals(getLocation(), product.getLocation());
+        return Double.compare(product.getPrice(), getPrice()) == 0 && Double.compare(product.getWeight(), getWeight()) == 0 && Objects.equals(getName(), product.getName()) && Objects.equals(getLocation(), product.getLocation());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getPrice(), getLocation(), getWeight(), getQuantity());
+        return Objects.hash(getName(), getPrice(), getLocation(), getWeight());
     }
 
     /*
@@ -88,7 +80,6 @@ public class Product {
                 ", price=" + price +
                 ", location='" + location + '\'' +
                 ", weight=" + weight +
-                ", quantity=" + quantity +
                 '}';
     }
 }

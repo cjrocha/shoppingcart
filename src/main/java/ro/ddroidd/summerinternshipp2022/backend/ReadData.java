@@ -23,7 +23,7 @@ public class ReadData {
             String line = br.readLine();
             while (line != null) {
                 String[] entries = line.split(",");
-                products.add(new Product(entries[0], Double.parseDouble(entries[1]), entries[2], Double.parseDouble(entries[3]), quantity));
+                products.add(new Product(entries[0], Double.parseDouble(entries[1]), entries[2], Double.parseDouble(entries[3])));
                 line = br.readLine();
                 //logger.info("File was read successfully");
             }
