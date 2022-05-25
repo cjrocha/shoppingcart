@@ -1,13 +1,15 @@
 package ro.ddroidd.summerinternshipp2022.backend;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class ShoppingCart {
-    private Product product;;
+    private Product product;
     private int quantity;
-    static List<Product> productsInCart = new ArrayList<>();
+    private Set<ShoppingCart> productsInCart = new HashSet<>();
     /**
      * Constructor for cart object
      * @param product
@@ -17,6 +19,7 @@ public class ShoppingCart {
         this.product = product;
         this.quantity = quantity;
     }
+    public ShoppingCart(){}
 
     /**
      * getters for cart elements
@@ -30,20 +33,31 @@ public class ShoppingCart {
         return quantity;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Set<ShoppingCart> getProductsInCart() {
+        return productsInCart;
+    }
+
     /**
      * Adding products to the shipping cart
      * @param product
      */
-    public static List<Product> addProductToCart(Product product){
-        int quantity = 0;
+    public Set<ShoppingCart> addProductToCart(Product product){
         if (productsInCart.isEmpty()){
-            productsInCart.add(product);
-            quantity = quantity + 1;
+            productsInCart.add(new ShoppingCart(product, quantity+1));
         } else {
             if(productsInCart.contains(product)){
-                productsInCart.setQuantity(product.getQuantity() + 1);
+                for (ShoppingCart p : productsInCart) {
+                    if (p == ShoppingCart.this) {
+                        quantity = (int) (p.getQuantity() + 1);
+                        ShoppingCart.this.setQuantity(quantity);
+                    }
+                }
             } else{
-                productsInCart.add(product);
+                productsInCart.add(new ShoppingCart(product, quantity+1));
             }
         }
         return productsInCart;
@@ -54,13 +68,17 @@ public class ShoppingCart {
      * @param product
      * @return
      */
-    public static List<Product> removeProductToCart(Product product){
-        List<Product> productsInCart = new ArrayList<>();
+    public Set<ShoppingCart> removeProductToCart(Product product){
         if (productsInCart.size() == 0){
             productsInCart.remove(product);
         } else {
             if(productsInCart.contains(product)){
-                product.setQuantity(product.getQuantity() - 1);
+                for (ShoppingCart p : productsInCart) {
+                    if (p == ShoppingCart.this) {
+                        quantity = (int) (p.getQuantity() - 1);
+                        ShoppingCart.this.setQuantity(quantity);
+                    }
+                }
             } else{
                 productsInCart.remove(product);
             }
